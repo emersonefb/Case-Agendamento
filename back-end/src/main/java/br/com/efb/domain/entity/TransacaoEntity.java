@@ -31,11 +31,11 @@ public class TransacaoEntity {
   @Column (name ="valorTransacao")
   private BigDecimal valorTransacao;
 
-  @OneToOne(cascade = CascadeType.REFRESH)
+  @ManyToOne(cascade = CascadeType.REFRESH)
   @JoinColumn(name = "idContaOrigem", referencedColumnName = "idConta")
   private ContaEntity contaOrigem;
 
-  @OneToOne(cascade = CascadeType.REFRESH)
+  @ManyToOne(cascade = CascadeType.REFRESH)
   @JoinColumn(name = "idContaDestino", referencedColumnName = "idConta")
   private ContaEntity contaDestino;
 
