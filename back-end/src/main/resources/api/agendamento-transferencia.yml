@@ -1,0 +1,905 @@
+swagger: "2.0"
+info:
+  description: "Agendamento de transferência entre contas"
+  version: "1.0.0"
+  title: "Agendamento de Transferência entre contas Service"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8090"
+basePath: "/back-end"
+tags:
+  - name: "Agendamento de Transferência"
+
+schemes:
+  - "http"
+  - "https"
+
+paths:
+  /conta/cadastrar:
+    post:
+      tags:
+        - "cadastro de conta"
+      summary: "cadastro de conta"
+      operationId: "cadastrarConta"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto com a conta a ser cadastrada"
+          required: true
+          schema:
+            $ref: "#/definitions/Conta"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Conta"
+
+  /conta/update:
+    put:
+      tags:
+        - "atualiza conta"
+      summary: "atualiza conta"
+      operationId: "atualizarConta"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto com a conta a ser atualizada"
+          required: true
+          schema:
+            $ref: "#/definitions/Conta"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Conta"
+
+  /conta/deletar/{codigo}:
+    delete:
+      tags:
+        - "deletar-conta"
+      summary: "deletar conta"
+      operationId: "deletarConta"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "codigo"
+          description: "id da conta a ser deletada"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: "NO CONTENT"
+
+  /conta/buscar/{codigo}:
+    get:
+      tags:
+        - "buscar-conta"
+      summary: "buscar conta"
+      operationId: "buscarConta"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "codigo"
+          description: "id para buscar conta"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Conta"
+
+  /conta/listar:
+    post:
+      tags:
+        - "listar-conta"
+      summary: "Recebe (input) ContaSearch., output = ContaPage"
+      operationId: "listarContas"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto do tipo ContaSearch"
+          required: true
+          schema:
+            $ref: "#/definitions/ContaSearch"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ContaPage"
+
+  /conta/deletar-lista:
+    post:
+      tags:
+        - "deletarListaContas"
+      summary: "delete Lista de Contas"
+      operationId: "deletarListaContas"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Object with the lista de idConta"
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+      responses:
+        "204":
+          description: "NO CONTENT"
+
+  /grupo-transferencia/cadastrar:
+    post:
+      tags:
+        - "cadastro de grupo transferencia"
+      summary: "cadastro de grupo transferencia"
+      operationId: "cadastrarGrupoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto com o grupo transferencia a ser cadastrada"
+          required: true
+          schema:
+            $ref: "#/definitions/GrupoTransferenciaCadastro"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GrupoTransferencia"
+
+  /grupo-transferencia/update:
+    put:
+      tags:
+        - "atualiza grupo transferencia"
+      summary: "atualiza grupo transferencia"
+      operationId: "atualizarGrupoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto com a grupo transferencia a ser atualizada"
+          required: true
+          schema:
+            $ref: "#/definitions/GrupoTransferenciaCadastro"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GrupoTransferencia"
+
+  /grupo-transferencia/deletar/{codigo}:
+    delete:
+      tags:
+        - "deletar-grupo-transferencia"
+      summary: "deletar grupo transferencia"
+      operationId: "deletarGrupoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "codigo"
+          description: "id do grupo transferencia a ser deletado"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: "NO CONTENT"
+
+  /grupo-transferencia/buscar/{codigo}:
+    get:
+      tags:
+        - "buscar-grupo-transferencia"
+      summary: "buscar-grupo-transferencia"
+      operationId: "buscarGrupoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "codigo"
+          description: "id para buscar grupo transferencia"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GrupoTransferencia"
+
+  /grupo-transferencia/listar:
+    post:
+      tags:
+        - "listar grupo transferencia"
+      summary: "Recebe (input) GrupoTransferenciaSearch., output = GrupoTransferenciaPage"
+      operationId: "listarGrupoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto do tipo GrupoTransferenciaSearch"
+          required: true
+          schema:
+            $ref: "#/definitions/GrupoTransferenciaSearch"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GrupoTransferenciaPage"
+
+  /grupo-transferencia/deletar-lista:
+    post:
+      tags:
+        - "deletarListaGrupoTransferencias"
+      summary: "delete Lista de Grupo transferencia"
+      operationId: "deletarListaGrupoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Object with the lista de idGrupoTransferencia"
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+      responses:
+        "204":
+          description: "NO CONTENT"
+
+  /tipo-transferencia/cadastrar:
+    post:
+      tags:
+        - "cadastro de tipo transferencia"
+      summary: "cadastro de tipo transferencia"
+      operationId: "cadastrarTipoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto com o tipo transferencia a ser cadastrada"
+          required: true
+          schema:
+            $ref: "#/definitions/TipoTransferencia"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/TipoTransferencia"
+
+  /tipo-transferencia/update:
+    put:
+      tags:
+        - "atualiza tipo transferencia"
+      summary: "atualiza tipo transferencia"
+      operationId: "atualizarTipoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto com a tipo transferencia a ser atualizada"
+          required: true
+          schema:
+            $ref: "#/definitions/TipoTransferencia"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/TipoTransferencia"
+
+  /tipo-transferencia/deletar/{codigo}:
+    delete:
+      tags:
+        - "deletar-tipo-transferencia"
+      summary: "deletar grupo transferencia"
+      operationId: "deletarTipoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "codigo"
+          description: "id do tipo transferencia a ser deletado"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: "NO CONTENT"
+
+  /tipo-transferencia/buscar/{codigo}:
+    get:
+      tags:
+        - "buscar-tipo-transferencia"
+      summary: "buscar-tipo-transferencia"
+      operationId: "buscarTipoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "codigo"
+          description: "id para buscar tipo transferencia"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/TipoTransferencia"
+
+  /tipo-transferencia/listar:
+    post:
+      tags:
+        - "listar tipo transferencia"
+      summary: "Recebe (input) TipoTransferenciaSearch., output = TipoTransferenciaPage"
+      operationId: "listarTipostransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto do tipo TipoTransferenciaSearch"
+          required: true
+          schema:
+            $ref: "#/definitions/TipoTransferenciaSearch"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/TipoTransferenciaPage"
+
+  /tipo-transferencia/deletar-lista:
+    post:
+      tags:
+        - "deletarListaTipoTransferencias"
+      summary: "delete Lista de Tipo transferencia"
+      operationId: "deletarListaTipoTransferencia"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Object with the lista de idTipoTransferencia"
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+      responses:
+        "204":
+          description: "NO CONTENT"
+
+  /transacao/cadastrar:
+    post:
+      tags:
+        - "cadastrar transacao"
+      summary: "cadastrar transacao"
+      operationId: "cadastrarTransacao"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto com TransacaoCadastro a ser cadastrada"
+          required: true
+          schema:
+            $ref: "#/definitions/TransacaoCadastro"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Transacao"
+
+  /transacao/update:
+    put:
+      tags:
+        - "update transacao"
+      summary: "update transacao"
+      operationId: "updateTransacao"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto para update transacao"
+          required: true
+          schema:
+            $ref: "#/definitions/Transacao"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Transacao"
+
+  /transacao/deletar/{codigo}:
+    delete:
+      tags:
+        - "deletar transacao"
+      summary: "deletar transacao"
+      operationId: "deletarTransacao"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "codigo"
+          description: "id da transacao para exclusao"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: "NO CONTENT"
+
+  /transacao/deletar-lista:
+    post:
+      tags:
+        - "deletar lista transacao"
+      summary: "deletar lista transacao"
+      operationId: "deletarListaTransacao"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto para deletar varias transacoes"
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+      responses:
+        "204":
+          description: "NO CONTENT"
+
+  /transacao/buscar/{codigo}:
+    get:
+      tags:
+        - "buscar-transacao"
+      summary: "buscar-transacao"
+      operationId: "buscarTransacao"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: path
+          name: "codigo"
+          description: "id para buscar transacao"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Transacao"
+
+  /transacao/listar:
+    post:
+      tags:
+        - "listar Transacoes"
+      summary: "Recebe (input) TransacaoSearch., output = TransacaoPage"
+      operationId: "listarTransacoes"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Objeto do tipo TransacaoSearch"
+          required: true
+          schema:
+            $ref: "#/definitions/TransacaoSearch"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/TransacaoPage"
+
+definitions:
+
+  StatusEnum:
+    type: string
+    enum:
+      - ATIVO
+      - PENDENTE
+      - CANCELADO
+      - CONCLUIDO
+
+  TransacaoSearch:
+    type: object
+    properties:
+      size:
+        type: integer
+        example: 1
+      page:
+        type: integer
+        example: 1
+      dataAgendamento:
+        type: string
+        example: "1990-01-30"
+      dataProgramada:
+        type: string
+        example: "1990-01-30"
+      valorSolicitado:
+        type: number
+      valorTransacao:
+        type: number
+      contaOrigem:
+        $ref: "#/definitions/Conta"
+      contaDestino:
+        $ref: "#/definitions/Conta"
+      tipoTransferencia:
+        $ref: "#/definitions/TipoTransferencia"
+      grupoTransferencia:
+        $ref: "#/definitions/GrupoTransferencia"
+      status:
+        $ref: "#/definitions/StatusEnum"
+
+  TransacaoPage:
+    type: object
+    properties:
+      totalPages:
+        type: integer
+        example: 1
+      total_elements:
+        type: integer
+        example: 1
+      page:
+        type: integer
+        example: 1
+      per_page:
+        type: integer
+        example: 1
+      has_next:
+        type: boolean
+      has_prev:
+        type: boolean
+      content:
+        type: array
+        items:
+          $ref: '#/definitions/Transacao'
+
+  Transacao:
+    type: object
+    properties:
+      idTransacao:
+        type: integer
+        format: int64
+      dataAgendamento:
+        type: string
+        example: "1990-01-30"
+      dataProgramada:
+        type: string
+        example: "1990-01-30"
+      valorSolicitado:
+        type: number
+      valorTransacao:
+        type: number
+      contaOrigem:
+        $ref: "#/definitions/Conta"
+      contaDestino:
+        $ref: "#/definitions/Conta"
+      tipoTransferencia:
+        $ref: "#/definitions/TipoTransferencia"
+      taxaFixa:
+        type: number
+      taxaVariavel:
+        type: number
+      status:
+        $ref: "#/definitions/StatusEnum"
+
+  TransacaoCadastro:
+    type: object
+    properties:
+      contaOrigem:
+        type: string
+      contaDestino:
+        type: string
+      dataAgendamento:
+        type: string
+        example: "1990-01-30"
+      dataProgramada:
+        type: string
+        example: "1990-01-30"
+      valorSolicitado:
+        type: number
+
+  TipoTransferenciaSearch:
+    type: object
+    properties:
+      size:
+        type: integer
+        example: 1
+      page:
+        type: integer
+        example: 1
+      nome:
+        type: string
+      descricao:
+        type: string
+      maxDias:
+        type: number
+      minValor:
+        type: number
+      maxValor:
+        type: number
+      taxaFixa:
+        type: number
+      taxaVariavel:
+        type:
+          number
+      status:
+        type: boolean
+
+  TipoTransferenciaPage:
+    type: object
+    properties:
+      totalPages:
+        type: integer
+        example: 1
+      total_elements:
+        type: integer
+        example: 1
+      page:
+        type: integer
+        example: 1
+      per_page:
+        type: integer
+        example: 1
+      has_next:
+        type: boolean
+      has_prev:
+        type: boolean
+      content:
+        type: array
+        items:
+          $ref: '#/definitions/TipoTransferencia'
+
+  TipoTransferencia:
+    type: object
+    properties:
+      idTipoTransferencia:
+        type: integer
+        format: int64
+      nome:
+        type: string
+      descricao:
+        type: string
+      minDias:
+        type: number
+      maxDias:
+        type: number
+      minValor:
+        type: number
+      maxValor:
+        type: number
+      taxaFixa:
+        type: number
+      taxaVariavel:
+        type: number
+      status:
+        type: boolean
+      grupoTransferencia:
+        $ref: '#/definitions/GrupoTransferencia'
+
+  GrupoTransferenciaSearch:
+    type: object
+    properties:
+      size:
+        type: integer
+        example: 1
+      page:
+        type: integer
+        example: 1
+      nome:
+        type: string
+      descricao:
+        type: string
+      TipoTransferencia:
+        $ref: "#/definitions/TipoTransferencia"
+      status:
+        type: boolean
+
+  GrupoTransferenciaPage:
+    type: object
+    properties:
+      totalPages:
+        type: integer
+        example: 1
+      total_elements:
+        type: integer
+        example: 1
+      page:
+        type: integer
+        example: 1
+      per_page:
+        type: integer
+        example: 1
+      has_next:
+        type: boolean
+      has_prev:
+        type: boolean
+      content:
+        type: array
+        items:
+          $ref: '#/definitions/GrupoTransferenciaResult'
+
+  GrupoTransferencia:
+    type: object
+    properties:
+      idGrupoTransferencia:
+        type: integer
+        format: int64
+      nome:
+        type: string
+      descricao:
+        type: string
+      status:
+        type: boolean
+
+
+  GrupoTransferenciaCadastro:
+    type: object
+    properties:
+      idGrupoTransferencia:
+        type: integer
+        format: int64
+      nome:
+        type: string
+      descricao:
+        type: string
+      status:
+        type: boolean
+      TipoTransferenciaList:
+        type: array
+        items:
+          $ref: "#/definitions/TipoTransferencia"
+
+
+  GrupoTransferenciaResult:
+    type: object
+    properties:
+      idGrupoTransferencia:
+        type: integer
+        format: int64
+      nome:
+        type: string
+      descricao:
+        type: string
+      TipoTransferenciaList:
+        type: array
+        items:
+          $ref: "#/definitions/TipoTransferencia"
+      status:
+        type: boolean
+
+  ContaSearch:
+    type: object
+    properties:
+      size:
+        type: integer
+        example: 1
+      page:
+        type: integer
+        example: 1
+      contaCorrente:
+        type: string
+      nome:
+        type: string
+      dataCadastro:
+        type: string
+        example: "1990-01-30"
+      status:
+        type: boolean
+
+  ContaPage:
+    type: object
+    properties:
+      totalPages:
+        type: integer
+        example: 1
+      total_elements:
+        type: integer
+        example: 1
+      page:
+        type: integer
+        example: 1
+      per_page:
+        type: integer
+        example: 1
+      has_next:
+        type: boolean
+      has_prev:
+        type: boolean
+      content:
+        type: array
+        items:
+          $ref: '#/definitions/Conta'
+
+  Conta:
+    type: object
+    properties:
+      idConta:
+        type: integer
+        format: int64
+      contaCorrente:
+        type: string
+      nome:
+        type: string
+      dataCadastro:
+        type: string
+        example: "1990-01-30"
+      status:
+        type: boolean
