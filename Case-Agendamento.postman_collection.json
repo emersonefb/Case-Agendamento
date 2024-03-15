@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "18cc12ee-fa52-44d4-a1a9-ec4f6c716798",
+		"name": "Case-Agendamento",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5543183"
+	},
+	"item": [
+		{
+			"name": "criar massa",
+			"item": [
+				{
+					"name": "http://localhost:8090/back-end/conta/cadastrar Conta 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n  \"contaCorrente\": \"111111\",\r\n  \"nome\": \"conta 1\",\r\n  \"dataCadastro\": \"1990-01-30\",\r\n  \"status\": true\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8090/back-end/conta/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"back-end",
+								"conta",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8090/back-end/conta/cadastrar Conta 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n  \"contaCorrente\": \"222222\",\r\n  \"nome\": \"conta 2\",\r\n  \"dataCadastro\": \"1990-01-30\",\r\n  \"status\": true\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8090/back-end/conta/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"back-end",
+								"conta",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8090/back-end/grupo-transferencia/cadastrar D",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"idTipoTransacao\": 4,\r\n            \"nome\": \"D\",\r\n            \"descricao\": \"Operações do tipo D tem a taxa igual a A, B ou C dependendo do valor da transferência.:\",\r\n            \"TipoTransferenciaList\": [\r\n                {\r\n                    \"idGrupoTransferencia\": 7,\r\n                    \"nome\": \"DA\",\r\n                    \"descricao\": \"Valores até $1.000 seguem a taxação tipo A\",\r\n                    \"minDias\": 0.00,\r\n                    \"maxDias\": 0.00,\r\n                    \"minValor\": 0.00,\r\n                    \"maxValor\": 1000.00,\r\n                    \"taxaFixa\": 3.00,\r\n                    \"taxaVariavel\": 3.00,\r\n                    \"status\": true\r\n                },\r\n                {\r\n                    \"idGrupoTransferencia\": 8,\r\n                    \"nome\": \"DB\",\r\n                    \"descricao\": \"Valores de $1.001 até $2.000 seguem a taxação tipo B\",\r\n                    \"minDias\": 1.00,\r\n                    \"maxDias\": 10.00,\r\n                    \"minValor\": 1000.01,\r\n                    \"maxValor\": 2000.00,\r\n                    \"taxaFixa\": 12.00,\r\n                    \"taxaVariavel\": 0.00,\r\n                    \"status\": true\r\n                },\r\n                {\r\n                    \"idGrupoTransferencia\": 9,\r\n                    \"nome\": \"DC10\",\r\n                    \"descricao\": \"Valores maiores que $2.000 seguem a taxação tipo C, acima de 10 dias da data de agendamento 8.2%\",\r\n                    \"minDias\": 11.00,\r\n                    \"maxDias\": 19.00,\r\n                    \"minValor\": 2000.01,\r\n                    \"maxValor\": 0.00,\r\n                    \"taxaFixa\": 8.2,\r\n                    \"taxaVariavel\": 0.00,\r\n                    \"status\": true\r\n                },\r\n                {\r\n                    \"idGrupoTransferencia\": 10,\r\n                    \"nome\": \"DC20\",\r\n                    \"descricao\": \"Valores maiores que $2.000 seguem a taxação tipo C,acima de 20 dias da data de agendamento 6.9%\",\r\n                    \"minDias\": 20,\r\n                    \"maxDias\": 29.00,\r\n                    \"minValor\": 2000.01,\r\n                    \"maxValor\": 0.00,\r\n                    \"taxaFixa\": 0.00,\r\n                    \"taxaVariavel\": 6.90,\r\n                    \"status\": true\r\n                },\r\n                {\r\n                    \"idGrupoTransferencia\": 11,\r\n                    \"nome\": \"DC30\",\r\n                    \"descricao\": \"Valores maiores que $2.000 seguem a taxação tipo C,acima de 30 dias da data de agendamento 4.7%\",\r\n                    \"minDias\": 30,\r\n                    \"maxDias\": 39.00,\r\n                    \"minValor\": 2000.01,\r\n                    \"maxValor\": 0.00,\r\n                    \"taxaFixa\": 0.00,\r\n                    \"taxaVariavel\": 4.70,\r\n                    \"status\": true\r\n                },\r\n                {\r\n                    \"idGrupoTransferencia\": 12,\r\n                    \"nome\": \"DC40\",\r\n                    \"descricao\": \"Valores maiores que $2.000 seguem a taxação tipo C,acima de 40 dias da data de agendamento 1.7%\",\r\n                    \"minDias\": 40.00,\r\n                    \"maxDias\": 0.00,\r\n                    \"minValor\": 2000.01,\r\n                    \"maxValor\": 0.00,\r\n                    \"taxaFixa\": 0.00,\r\n                    \"taxaVariavel\": 1.70,\r\n                    \"status\": true\r\n                }\r\n            ],\r\n            \"status\": true\r\n        }"
+						},
+						"url": {
+							"raw": "http://localhost:8090/back-end/grupo-transferencia/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"back-end",
+								"grupo-transferencia",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8090/back-end/transacao/cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"contaOrigem\": \"111111\",\r\n  \"contaDestino\": \"222222\",\r\n  \"dataAgendamento\": \"{{dataMinha}}\",\r\n  \"dataProgramada\": \"{{dataMinha}}\",\r\n  \"valorSolicitado\": 100\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8090/back-end/transacao/cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"back-end",
+								"transacao",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8090/back-end/transacao/listar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"size\": 10,\r\n  \"page\": 0\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8090/back-end/transacao/listar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"back-end",
+								"transacao",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
