@@ -1,0 +1,148 @@
+
+<div fxLayout="column" fxLayoutAlign="space-between stretch" style="height: calc(100vh - 84px);">
+
+    <mat-card style="height: 8%; margin: 5px 12px 7px 12px;">
+      <div style="padding-top: 15px; padding-left: 12px; padding-right: 12px;">
+          <span class="main-title">
+              Lista de Transações
+            </span>
+      </div>
+    </mat-card>
+    
+    <mat-card style="height: 80%; margin: 5px 12px 7px 12px;">
+      <mat-sidenav-container class="mat-sidenav-container">
+        <div class="table-container mat-elevation-z8">
+          <table mat-table #input [dataSource]="dataSource" class="mat-elevation-z8">
+  
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                              [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"
+                              [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+          
+            <!-- idTransacao Column -->
+            <ng-container matColumnDef="idTransacao">
+              <th mat-header-cell *matHeaderCellDef> Código </th>
+              <td mat-cell *matCellDef="let element"> {{element.idTransacao}} </td>
+            </ng-container>
+          
+            <!-- dataAgendamento Column -->
+            <ng-container matColumnDef="dataAgendamento">
+              <th mat-header-cell *matHeaderCellDef> Data do Agendamento </th>
+              <td mat-cell *matCellDef="let element"> {{element.dataAgendamento | date : 'dd/MM/yyyy'}} </td>
+            </ng-container>
+          
+            <!-- dataProgramada Column -->
+            <ng-container matColumnDef="dataProgramada">
+              <th mat-header-cell *matHeaderCellDef> Data Programada para operação </th>
+              <td mat-cell *matCellDef="let element"> {{element.dataProgramada | date : 'dd/MM/yyyy'}} </td>
+            </ng-container>
+          
+            <!-- valorSolicitado Column -->
+            <ng-container matColumnDef="valorSolicitado">
+              <th mat-header-cell *matHeaderCellDef> Valor Solicitado </th>
+              <td mat-cell *matCellDef="let element"> {{element.valorSolicitado | currency : 'BRL'}} </td>
+            </ng-container>
+          
+            <!-- valorTransacao Column -->
+            <ng-container matColumnDef="valorTransacao">
+              <th mat-header-cell *matHeaderCellDef> Valor da Transação </th>
+              <td mat-cell *matCellDef="let element"> {{element.valorTransacao | currency : 'BRL'}} </td>
+            </ng-container>
+          
+            <!-- contaOrigem Column -->
+            <ng-container matColumnDef="contaOrigem">
+              <th mat-header-cell *matHeaderCellDef> Conta Origem </th>
+              <td mat-cell *matCellDef="let element"  > {{element.contaOrigem.contaCorrente}} </td>
+            </ng-container>
+            
+          
+            <!-- contaDestino Column -->
+            <ng-container matColumnDef="contaDestino">
+              <th mat-header-cell *matHeaderCellDef> Conta Destino </th>
+              <td mat-cell *matCellDef="let element"> {{element.contaDestino.contaCorrente}} </td>
+            </ng-container>
+            
+            <!-- tipoTransferencia Column -->
+            <ng-container matColumnDef="tipoTransferencia">
+              <th mat-header-cell *matHeaderCellDef> Tipo de Transação </th>
+              <td mat-cell *matCellDef="let element"> {{element.tipoTransferencia.nome}} </td>
+            </ng-container>
+            
+            <!-- grupoTransferencia Column -->
+            <ng-container matColumnDef="grupoTransferencia">
+              <th mat-header-cell *matHeaderCellDef> Grupo da Transação </th>
+              <td mat-cell *matCellDef="let element"> {{element.tipoTransferencia.grupoTransferencia.nome}} </td>
+            </ng-container>
+            
+            <!-- taxaFixa Column -->
+            <ng-container matColumnDef="taxaFixa">
+              <th mat-header-cell *matHeaderCellDef> Taxa Fixa </th>
+              <td mat-cell *matCellDef="let element"> {{element.taxaFixa}} </td>
+            </ng-container>
+            
+          
+            <!-- taxaVariavel Column -->
+            <ng-container matColumnDef="taxaVariavel">
+              <th mat-header-cell *matHeaderCellDef> % de Taxa Variavel </th>
+              <td mat-cell *matCellDef="let element"> {{element.taxaVariavel}}% </td>
+            </ng-container>
+            
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element">
+                @if (element.status) {<span >Ativo</span>} 
+                @else {<span >Inativo</span>} 
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+                (click)="rowClicked(row.idTransacao)">
+            </tr>
+            
+          </table>
+            <mat-paginator #paginator
+                    class="demo-paginator"
+                    (page)="handlePageEvent($event)"
+                    [length]="length"
+                    [pageSize]="pageSize"
+                    [disabled]="disabled"
+                    [showFirstLastButtons]="showFirstLastButtons"
+                    [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+                    [hidePageSize]="hidePageSize"
+                    [pageIndex]="pageIndex"
+                    aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </mat-sidenav-container>
+    </mat-card>
+  
+    <mat-card class="btn-fim" >
+      <div  class="parent" style=" height: 46px; width: 100%; ">
+        <div  class="parent" style="margin: 8px 16px;">
+          <span>
+            <button id="save-btn" type="button" (click)="excluir()" mat-raised-button mat-button-sm color="primary" style="margin-right: 5px; text-transform: uppercase;" >Excluir</button>
+            <button id="new-btn" type="button" (click)="adicionar()" mat-raised-button mat-button-sm color="primary" style="margin-right: 5px; text-transform: uppercase;" >Adicionar</button>
+          </span>
+        </div>
+      </div>
+    </mat-card>
+  
+  </div>
+  
+  
+    

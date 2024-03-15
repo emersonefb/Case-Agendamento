@@ -1,0 +1,67 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" style="height: calc(100vh - 182px);">
+    <mat-card style="height: 8%; margin: 5px 12px 7px 12px;">
+        <div style="padding-top: 15px; padding-left: 12px; padding-right: 12px;">
+            <span class="main-title">
+              Cadastro de Transação - 
+                <span >{{ 'Adicionar'  }}</span>
+              </span>
+        </div>
+    </mat-card>
+
+    <mat-card style="height: 100%; margin: 5px 12px 7px 12px;">
+        <form style="height: 100%;" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-card-content style="max-height: 370px;">
+                <div style="margin-top: 1px !important" fxLayout="row" fxLayoutGap="15px">
+                    <mat-form-field appearance="fill" class="mat-fill-contaOrigem">
+                        <mat-label>Conta Origen</mat-label>
+                        <input matInput #contaCorrente maxlength="6" [formControl]="form.controls.contaOrigem"  digitsOnly>
+                        <mat-error *ngIf="form.controls.contaOrigem.hasError('required')"> {{ 'campo requerido' }} </mat-error>
+                        <mat-error *ngIf="form.controls.contaOrigem.hasError('minlength')"> {{ 'campo minimo 6 caracteres' }} </mat-error>
+                        <mat-error *ngIf="form.controls.contaOrigem.hasError('maxlength')"> {{ 'campo maxlength' }} </mat-error>
+                        
+                        <mat-hint align='end'>{{contaCorrente.value.length}} / 6</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-fill-contaCorrente">
+                        <mat-label>Conta Destino</mat-label>
+                        <input matInput #contaCorrente maxlength="6" [formControl]="form.controls.contaDestino"  digitsOnly>
+                        <mat-error *ngIf="form.controls.contaDestino.hasError('required')"> {{ 'campo requerido' }} </mat-error>
+                        <mat-error *ngIf="form.controls.contaDestino.hasError('minlength')"> {{ 'campo minimo 6 caracteres' }} </mat-error>
+                        <mat-error *ngIf="form.controls.contaDestino.hasError('maxlength')"> {{ 'campo maxlength' }} </mat-error>
+                        
+                        <mat-hint align='end'>{{contaCorrente.value.length}} / 6</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-fill-valor">
+                        <mat-label >Valor</mat-label>
+                        <input matInput type="number" [formControl]="form.controls.valorSolicitado"  decimalMarker="," >
+                        <mat-error *ngIf="form.controls.valorSolicitado.hasError('required')"> {{ 'campo requerido' }} </mat-error>
+                    </mat-form-field>
+
+                <mat-form-field class="mat-fill-dtFicha">
+                        <mat-label>Data Cadastro</mat-label>
+                        <input matInput [matDatepicker]="picker" [formControl]="form.controls.dataProgramada">
+                        <mat-hint>DD/MM/AAAA</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    
+
+                </div>
+            </mat-card-content>
+        </form>
+    </mat-card>
+
+    <!-- Begin - Actions bar -->
+    <mat-card class="btn-fim" >
+            <div  class="parent" >
+                <span>
+                  <button id="save-btn" type="button" (click)="onSubmit()" mat-raised-button mat-button-sm color="primary" style="margin-top: 5px; margin-right: 5px; text-transform: uppercase;" >{{ 'save'  }}</button>
+                  <button id="back-btn" type="button" (click)="back()" mat-raised-button mat-button-sm style=" margin-top: 5px; background-color: #919191; color: white; text-transform: uppercase;" >Voltar</button>
+                </span>
+            </div>
+          <!-- End - Actions bar -->
+    </mat-card>
+</div>
+  
+

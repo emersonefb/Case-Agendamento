@@ -1,0 +1,98 @@
+
+<div fxLayout="column" fxLayoutAlign="space-between stretch" style="height: calc(100vh - 84px);">
+
+    <mat-card style="height: 8%; margin: 5px 12px 7px 12px;">
+      <div style="padding-top: 15px; padding-left: 12px; padding-right: 12px;">
+          <span class="main-title">
+              Lista de Grupo de Transferência
+            </span>
+      </div>
+    </mat-card>
+    
+    <mat-card style="height: 80%; margin: 5px 12px 7px 12px;">
+      <mat-sidenav-container class="mat-sidenav-container">
+        <div class="table-container mat-elevation-z8">
+          <table mat-table #input [dataSource]="dataSource" class="mat-elevation-z8">
+  
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                              [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"
+                              [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+          
+            <!-- idGrupoTransferencia Column -->
+            <ng-container matColumnDef="idGrupoTransferencia">
+              <th mat-header-cell *matHeaderCellDef> Código </th>
+              <td mat-cell *matCellDef="let element"> {{element.idGrupoTransferencia}} </td>
+            </ng-container>
+          
+            <!-- nome Column -->
+            <ng-container matColumnDef="nome">
+              <th mat-header-cell *matHeaderCellDef> nome </th>
+              <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+            </ng-container>
+          
+            <!-- descricao Column -->
+            <ng-container matColumnDef="descricao">
+              <th mat-header-cell *matHeaderCellDef> descricao </th>
+              <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+            </ng-container>
+          
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element">
+                @if (element.status) {<span >Ativo</span>} 
+                @else {<span >Inativo</span>} 
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+                (click)="rowClicked(row.idGrupoTransferencia)">
+            </tr>
+            
+          </table>
+            <mat-paginator #paginator
+                    class="demo-paginator"
+                    (page)="handlePageEvent($event)"
+                    [length]="length"
+                    [pageSize]="pageSize"
+                    [disabled]="disabled"
+                    [showFirstLastButtons]="showFirstLastButtons"
+                    [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+                    [hidePageSize]="hidePageSize"
+                    [pageIndex]="pageIndex"
+                    aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </mat-sidenav-container>
+    </mat-card>
+  
+    <mat-card class="btn-fim" >
+      <div  class="parent" style=" height: 46px; width: 100%; ">
+        <div  class="parent" style="margin: 8px 16px;">
+          <span>
+            <button id="save-btn" type="button" (click)="excluir()" mat-raised-button mat-button-sm color="primary" style="margin-right: 5px; text-transform: uppercase;" >Excluir</button>
+            <button id="new-btn" type="button" (click)="adicionar()" mat-raised-button mat-button-sm color="primary" style="margin-right: 5px; text-transform: uppercase;" >Adicionar</button>
+          </span>
+        </div>
+      </div>
+    </mat-card>
+  
+  </div>
+  
+  
+    

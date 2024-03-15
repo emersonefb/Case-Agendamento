@@ -1,0 +1,51 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" style="height: calc(100vh - 182px);">
+    <mat-card style="height: 8%; margin: 5px 12px 7px 12px;">
+        <div style="padding-top: 15px; padding-left: 12px; padding-right: 12px;">
+            <span class="main-title">
+              Cadastro de Grupo de transferência - 
+                <span >{{ 'Adicionar'  }}</span>
+              </span>
+        </div>
+    </mat-card>
+
+    <mat-card style="height: 100%; margin: 5px 12px 7px 12px;">
+        <form style="height: 100%;" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-card-content style="max-height: 370px;">
+                <div style="margin-top: 1px !important" fxLayout="row" fxLayoutGap="15px">
+                    <mat-form-field appearance="fill" class="mat-fill-idConta" >
+                        <mat-label>Codigo</mat-label>
+                        <input matInput [formControl]="form.controls.idGrupoTransferencia"  maxlength="18" >
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-fill-nome">
+                        <mat-label >Nome</mat-label>
+                        <input matInput [formControl]="form.controls.nome" required maxlength="100">
+                        <mat-error *ngIf="form.controls.nome.hasError('required')"> {{ 'campo requerido' }} </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-fill-nome">
+                        <mat-label >Descrição</mat-label>
+                        <input matInput [formControl]="form.controls.descricao" required maxlength="100">
+                        <mat-error *ngIf="form.controls.descricao.hasError('required')"> {{ 'campo requerido' }} </mat-error>
+                    </mat-form-field>
+
+                    <mat-checkbox class="example-margin" [formControl]="form.controls.status">Ativo</mat-checkbox>
+
+                </div>
+            </mat-card-content>
+        </form>
+    </mat-card>
+
+    <!-- Begin - Actions bar -->
+    <mat-card class="btn-fim" >
+            <div  class="parent" >
+                <span>
+                  <button id="save-btn" type="button" (click)="onSubmit()" mat-raised-button mat-button-sm color="primary" style="margin-top: 5px; margin-right: 5px; text-transform: uppercase;" >{{ 'save'  }}</button>
+                  <button id="back-btn" type="button" (click)="back()" mat-raised-button mat-button-sm style=" margin-top: 5px; background-color: #919191; color: white; text-transform: uppercase;" >Voltar</button>
+                </span>
+            </div>
+          <!-- End - Actions bar -->
+    </mat-card>
+</div>
+  
+

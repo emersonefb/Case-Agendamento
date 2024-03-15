@@ -1,0 +1,124 @@
+.main-title{
+    font-size: large;
+  }
+  
+  table {
+      width: 100%;
+      padding-left: 2px;
+      padding-right: 2px;
+  }
+  
+  .mat-form-field {
+      font-size: 14px;
+      width: 100%;
+      padding-left: 2px;
+      padding-right: 2px;
+  }
+  
+  mat-row.element-row:not(.expanded-row):hover {
+      background: #DEDEDE;
+  }
+  
+  mat-row.element-row:not(.expanded-row):active {
+      background: #d3d8ef;
+  }
+  
+  
+  .btn-fim{
+      height: 10%;
+      margin: 5px 12px 7px 12px;
+      /* display: flex; */
+      /* flex-flow: row wrap; */
+      /* justify-content: end; */
+      box-shadow: 0px 0px 6px rgba(0,0,0,.4);
+    }
+    
+    .parent {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content:  end;
+    }
+  
+    
+  .mat-mdc-form-field {
+      padding-right: 2px;
+      padding-left: 2px;
+  }
+  
+  .table {
+      overflow: auto;
+      height: 100%;
+      width: 100%;
+    }
+    
+  .tab-container {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .mat-header-row {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background-color: #DEDEDE;
+  }
+  
+  .mat-header-cell {
+    font-size: 15px;
+    font-weight: bold !important;
+  }
+  
+  .mat-tab-body-wrapper{
+    flex-grow: 1;
+    padding: 5px 10px 10px 10px;
+  }
+  
+  .alert-danger,
+  .alert-error {
+    color: #FA6072;
+    border-color: #eed3d7;
+    font-size: 12px;
+  }
+  
+  .mat-column-select {
+    flex: 0 0 20px;
+  }
+  
+  .mat-column-Status {
+    flex: 0 0 100px;
+    justify-content:  center;
+  }
+  
+  .mat-column-descricao {
+    flex: 1 1 60%;
+  }
+  
+  .mat-mdc-row {
+    height: 100%; 
+    color: var(--mat-table-row-item-label-text-color, rgba(0, 0, 0, 0.87));
+  }
+  
+  .mdc-data-table__cell {
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+  }
+  
+  .mdc-data-table__header-cell {
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    outline: none;
+    text-align: center;
+  }
+  
+  .messages-panel {
+    margin: 7px 12px 2px 12px;
+    border-radius: 5px;
+    border: 1px solid #EF9A9A;
+    background-color: #FFCDD2;
+  }

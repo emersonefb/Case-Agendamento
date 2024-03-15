@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+
+.my-special-section {
+ $special-primary: mat.define-palette(mat.$orange-palette);
+ $special-accent: mat.define-palette(mat.$brown-palette);
+ $special-theme: mat.define-dark-theme((
+   color: (primary: $special-primary, accent: $special-accent),
+ ));
+
+ @include mat.button-color($special-theme);
+
+}

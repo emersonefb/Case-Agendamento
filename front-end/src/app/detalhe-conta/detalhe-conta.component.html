@@ -1,0 +1,335 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" style="height: calc(100vh - 182px);">
+    <mat-card style="height: 8%; margin: 5px 12px 7px 12px;">
+        <div style="padding-top: 15px; padding-left: 12px; padding-right: 12px;">
+            <span class="main-title">
+              Gerenciamento de Conta - @if (cadastroNovo) {
+                <span >{{ 'Adicionar'  }}</span>
+                } 
+                @else {
+                    <span >{{ 'Editar'  }}</span>
+                }
+              </span>
+        </div>
+    </mat-card>
+
+    <mat-card style="height: 100%; margin: 5px 12px 7px 12px;">
+        <form style="height: 100%;" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-tab-group class="mat-stretch-tab-group">
+                <mat-tab label="Dados da conta">
+                    <ng-template matTabContent>
+                        <mat-card-content style="max-height: 370px;">
+                            <div style="margin-top: 1px !important" fxLayout="row" fxLayoutGap="15px">
+                                <mat-form-field appearance="fill" class="mat-fill-idConta" >
+                                    <mat-label>Codigo</mat-label>
+                                    <input matInput [formControl]="form.controls.idConta"  maxlength="18" >
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" class="mat-fill-contaCorrente">
+                                    <mat-label>Conta Corrente</mat-label>
+                                    <input matInput #contaCorrente maxlength="6" [formControl]="form.controls.contaCorrente"  digitsOnly>
+                                    <mat-error *ngIf="form.controls.contaCorrente.hasError('required')"> {{ 'campo requerido' }} </mat-error>
+                                    <mat-error *ngIf="form.controls['contaCorrente'].hasError('minlength')"> {{ 'campo minimo 6 caracteres' }} </mat-error>
+                                    <mat-error *ngIf="form.controls.contaCorrente.hasError('maxlength')"> {{ 'campo maxlength' }} </mat-error>
+                                    
+                                    <mat-hint align='end'>{{contaCorrente.value.length}} / 6</mat-hint>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" class="mat-fill-nome">
+                                    <mat-label >Nome Completo</mat-label>
+                                    <input matInput [formControl]="form.controls.nome" required maxlength="100">
+                                    <mat-error *ngIf="form.controls.nome.hasError('required')"> {{ 'campo requerido' }} </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="mat-fill-dtCad">
+                                    <mat-label>Data de atualização</mat-label>
+                                    <input matInput [matDatepicker]="picker" [formControl]="form.controls.dataCadastro">
+                                    <mat-hint>DD/MM/AAAA</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                                
+                                <mat-checkbox class="example-margin" [formControl]="form.controls.status">Ativo</mat-checkbox>
+
+
+                            </div>
+                        </mat-card-content>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Transações Recebidas">
+                    <ng-template matTabContent>
+                        <mat-card-content >
+                            <div style="height: 100%; width: 100%;  margin-top: 5px;" >
+                                <mat-card style="height: 80%;">
+                                    <mat-sidenav-container class="mat-sidenav-container">
+                                      <div class="table-container mat-elevation-z8">
+                                        <table mat-table #input [dataSource]="dataSource" class="mat-elevation-z8">
+                                
+                                          <!-- Checkbox Column -->
+                                          <ng-container matColumnDef="select">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                              <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                                            [checked]="selection.hasValue() && isAllSelected()"
+                                                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                                            [aria-label]="checkboxLabel()">
+                                              </mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let row">
+                                              <mat-checkbox (click)="$event.stopPropagation()"
+                                                            (change)="$event ? selection.toggle(row) : null"
+                                                            [checked]="selection.isSelected(row)"
+                                                            [aria-label]="checkboxLabel(row)">
+                                              </mat-checkbox>
+                                            </td>
+                                          </ng-container>
+                                        
+                                          <!-- idTransacao Column -->
+                                          <ng-container matColumnDef="idTransacao">
+                                            <th mat-header-cell *matHeaderCellDef> Código </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.idTransacao}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- dataAgendamento Column -->
+                                          <ng-container matColumnDef="dataAgendamento">
+                                            <th mat-header-cell *matHeaderCellDef> Data do Agendamento </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.dataAgendamento | date : 'dd/MM/yyyy'}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- dataProgramada Column -->
+                                          <ng-container matColumnDef="dataProgramada">
+                                            <th mat-header-cell *matHeaderCellDef> Data Programada para operação </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.dataProgramada | date : 'dd/MM/yyyy'}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- valorSolicitado Column -->
+                                          <ng-container matColumnDef="valorSolicitado">
+                                            <th mat-header-cell *matHeaderCellDef> Valor Solicitado </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.valorSolicitado | currency : 'BRL'}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- valorTransacao Column -->
+                                          <ng-container matColumnDef="valorTransacao">
+                                            <th mat-header-cell *matHeaderCellDef> Valor da Transação </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.valorTransacao | currency : 'BRL'}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- contaOrigem Column -->
+                                          <ng-container matColumnDef="contaOrigem">
+                                            <th mat-header-cell *matHeaderCellDef> Conta Origem </th>
+                                            <td mat-cell *matCellDef="let element"  > {{element.contaOrigem.contaCorrente}} </td>
+                                          </ng-container>
+                                          
+                                        
+                                          <!-- contaDestino Column -->
+                                          <ng-container matColumnDef="contaDestino">
+                                            <th mat-header-cell *matHeaderCellDef> Conta Destino </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.contaDestino.contaCorrente}} </td>
+                                          </ng-container>
+                                          
+                                          <!-- tipoTransferencia Column -->
+                                          <ng-container matColumnDef="tipoTransferencia">
+                                            <th mat-header-cell *matHeaderCellDef> Tipo de Transação </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.tipoTransferencia.nome}} </td>
+                                          </ng-container>
+                                          
+                                          <!-- grupoTransferencia Column -->
+                                          <ng-container matColumnDef="grupoTransferencia">
+                                            <th mat-header-cell *matHeaderCellDef> Grupo da Transação </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.tipoTransferencia.grupoTransferencia.nome}} </td>
+                                          </ng-container>
+                                          
+                                          <!-- taxaFixa Column -->
+                                          <ng-container matColumnDef="taxaFixa">
+                                            <th mat-header-cell *matHeaderCellDef> Taxa Fixa </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.taxaFixa}} </td>
+                                          </ng-container>
+                                          
+                                        
+                                          <!-- taxaVariavel Column -->
+                                          <ng-container matColumnDef="taxaVariavel">
+                                            <th mat-header-cell *matHeaderCellDef> % de Taxa Variavel </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.taxaVariavel}}% </td>
+                                          </ng-container>
+                                          
+                                          <!-- Status Column -->
+                                          <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                                            <td mat-cell *matCellDef="let element">
+                                              @if (element.status) {<span >Ativo</span>} 
+                                              @else {<span >Inativo</span>} 
+                                            </td>
+                                          </ng-container>
+                                        
+                                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                          <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                          </tr>
+                                          
+                                        </table>
+                                          <mat-paginator #paginator
+                                                  class="demo-paginator"
+                                                  (page)="handlePageEvent($event)"
+                                                  [length]="length"
+                                                  [pageSize]="pageSize"
+                                                  [disabled]="disabled"
+                                                  [showFirstLastButtons]="showFirstLastButtons"
+                                                  [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+                                                  [hidePageSize]="hidePageSize"
+                                                  [pageIndex]="pageIndex"
+                                                  aria-label="Select page">
+                                        </mat-paginator>
+                                      </div>
+                                    </mat-sidenav-container>
+                                  </mat-card>
+                            
+                            </div>
+                        </mat-card-content>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Transações efetuadas">
+                    <ng-template matTabContent>
+                        <mat-card-content >
+                            <div style="height: 100%; width: 100%; margin-top: 5px;" >
+                                <mat-card style="height: 80%; ">
+                                    <mat-sidenav-container class="mat-sidenav-container">
+                                      <div class="table-container mat-elevation-z8">
+                                        <table mat-table #inputOrigem [dataSource]="dataSourceOrigem" class="mat-elevation-z8">
+                                
+                                          <!-- Checkbox Column -->
+                                          <ng-container matColumnDef="select">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                              <mat-checkbox (change)="$event ? toggleAllRowsOrigem() : null"
+                                                            [checked]="selectionOrigem.hasValue() && isAllSelectedOrigem()"
+                                                            [indeterminate]="selectionOrigem.hasValue() && !isAllSelectedOrigem()"
+                                                            [aria-label]="checkboxLabelOrigem()">
+                                              </mat-checkbox>
+                                            </th>
+                                            <td mat-cell *matCellDef="let row">
+                                              <mat-checkbox (click)="$event.stopPropagation()"
+                                                            (change)="$event ? selectionOrigem.toggle(row) : null"
+                                                            [checked]="selectionOrigem.isSelected(row)"
+                                                            [aria-label]="checkboxLabelOrigem(row)">
+                                              </mat-checkbox>
+                                            </td>
+                                          </ng-container>
+                                        
+                                          <!-- idTransacao Column -->
+                                          <ng-container matColumnDef="idTransacao">
+                                            <th mat-header-cell *matHeaderCellDef> Código </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.idTransacao}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- dataAgendamento Column -->
+                                          <ng-container matColumnDef="dataAgendamento">
+                                            <th mat-header-cell *matHeaderCellDef> Data do Agendamento </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.dataAgendamento | date : 'dd/MM/yyyy'}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- dataProgramada Column -->
+                                          <ng-container matColumnDef="dataProgramada">
+                                            <th mat-header-cell *matHeaderCellDef> Data Programada para operação </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.dataProgramada | date : 'dd/MM/yyyy'}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- valorSolicitado Column -->
+                                          <ng-container matColumnDef="valorSolicitado">
+                                            <th mat-header-cell *matHeaderCellDef> Valor Solicitado </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.valorSolicitado | currency : 'BRL'}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- valorTransacao Column -->
+                                          <ng-container matColumnDef="valorTransacao">
+                                            <th mat-header-cell *matHeaderCellDef> Valor da Transação </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.valorTransacao | currency : 'BRL'}} </td>
+                                          </ng-container>
+                                        
+                                          <!-- contaOrigem Column -->
+                                          <ng-container matColumnDef="contaOrigem">
+                                            <th mat-header-cell *matHeaderCellDef> Conta Origem </th>
+                                            <td mat-cell *matCellDef="let element"  > {{element.contaOrigem.contaCorrente}} </td>
+                                          </ng-container>
+                                          
+                                        
+                                          <!-- contaDestino Column -->
+                                          <ng-container matColumnDef="contaDestino">
+                                            <th mat-header-cell *matHeaderCellDef> Conta Destino </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.contaDestino.contaCorrente}} </td>
+                                          </ng-container>
+                                          
+                                          <!-- tipoTransferencia Column -->
+                                          <ng-container matColumnDef="tipoTransferencia">
+                                            <th mat-header-cell *matHeaderCellDef> Tipo de Transação </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.tipoTransferencia.nome}} </td>
+                                          </ng-container>
+                                          
+                                          <!-- grupoTransferencia Column -->
+                                          <ng-container matColumnDef="grupoTransferencia">
+                                            <th mat-header-cell *matHeaderCellDef> Grupo da Transação </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.tipoTransferencia.grupoTransferencia.nome}} </td>
+                                          </ng-container>
+                                          
+                                          <!-- taxaFixa Column -->
+                                          <ng-container matColumnDef="taxaFixa">
+                                            <th mat-header-cell *matHeaderCellDef> Taxa Fixa </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.taxaFixa}} </td>
+                                          </ng-container>
+                                          
+                                        
+                                          <!-- taxaVariavel Column -->
+                                          <ng-container matColumnDef="taxaVariavel">
+                                            <th mat-header-cell *matHeaderCellDef> % de Taxa Variavel </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.taxaVariavel}}% </td>
+                                          </ng-container>
+                                          
+                                          <!-- Status Column -->
+                                          <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                                            <td mat-cell *matCellDef="let element">
+                                              @if (element.status) {<span >Ativo</span>} 
+                                              @else {<span >Inativo</span>} 
+                                            </td>
+                                          </ng-container>
+                                        
+                                          <tr mat-header-row *matHeaderRowDef="displayedColumnsOrigem"></tr>
+                                          <tr mat-row *matRowDef="let row; columns: displayedColumnsOrigem;">
+                                          </tr>
+                                          
+                                        </table>
+                                          <mat-paginator #paginatorOrigem
+                                                  class="demo-paginator"
+                                                  (page)="handlePageEventOrigem($event)"
+                                                  [length]="lengthOrigem"
+                                                  [pageSize]="pageSizeOptions"
+                                                  [disabled]="disabledOrigem"
+                                                  [showFirstLastButtons]="showFirstLastButtonsOrigem"
+                                                  [pageSizeOptions]="showPageSizeOptionsOrigem ? pageSizeOptionsOrigem : []"
+                                                  [hidePageSize]="hidePageSizeOrigem"
+                                                  [pageIndex]="pageIndexOrigem"
+                                                  aria-label="Select page">
+                                        </mat-paginator>
+                                      </div>
+                                    </mat-sidenav-container>
+                                  </mat-card>
+                            
+                            </div>
+                        </mat-card-content>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+            
+        </form>
+    </mat-card>
+
+    <!-- Begin - Actions bar -->
+    <mat-card class="btn-fim" >
+            <div  class="parent" >
+                <span>
+                  <button id="save-btn" type="button" (click)="onSubmit()" mat-raised-button mat-button-sm color="primary" style="margin-top: 5px; margin-right: 5px; text-transform: uppercase;" >{{ 'save'  }}</button>
+                  <button id="back-btn" type="button" (click)="back()" mat-raised-button mat-button-sm style=" margin-top: 5px; background-color: #919191; color: white; text-transform: uppercase;" >Voltar</button>
+                </span>
+            </div>
+          <!-- End - Actions bar -->
+    </mat-card>
+</div>
+  
+

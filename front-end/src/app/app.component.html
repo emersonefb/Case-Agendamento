@@ -1,0 +1,51 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="true" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+
+    <mat-toolbar color="primary" class="btn100" >
+      <span>Menu</span>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <button type="button" class="btn100" mat-button (click)="navigate('/')">
+      Home<mat-icon>home</mat-icon>
+    </button>
+    <button type="button" class="btn100" mat-button (click)="navigate('/listarTransacao')">
+      Listar Transação<mat-icon>list</mat-icon>
+    </button>
+    <button type="button" class="btn100" mat-button (click)="navigate('/listarGrupoTransferencia')">
+      Listar Grupo Transferência<mat-icon>list</mat-icon>
+    </button>
+    <button type="button" class="btn100" mat-button (click)="navigate('/listarTipoTransferencia')">
+      Listar Tipos Transferência<mat-icon>list</mat-icon>
+    </button>
+    <button type="button" class="btn100" mat-button (click)="navigate('/listarContas')">
+      Listar Contas<mat-icon>list</mat-icon>
+    </button>
+    <button type="button" class="btn100" mat-button (click)="navigate('/editarConta/0')">
+      Nova Conta<mat-icon>edit</mat-icon>
+    </button>
+    <button type="button" class="btn100" mat-button (click)="navigate('/editarTiposTransferencia/0')">
+      Nova Tipos Transferência<mat-icon>edit</mat-icon>
+    </button>
+    <button type="button" class="btn100" mat-button (click)="navigate('/cadastroGrupoTransferencia/0')">
+      Novo Grupo Transferência<mat-icon>edit</mat-icon>
+    </button>
+    <button type="button" class="btn100" mat-button (click)="navigate('/cadastroTransacao')">
+      Nova Transação<mat-icon>edit</mat-icon>
+    </button>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <p>
+      <mat-toolbar color="primary">
+        <button type="button" mat-button (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>My App</span>
+        <span class="example-spacer"></span>
+      </mat-toolbar>
+    </p>
+    
+    <router-outlet />
+  </div>
+
+</mat-drawer-container>
