@@ -1,67 +1,56 @@
-# Case-Agendamento
+﻿Case-Agendamento
+O projeto deverá fazer agendamento de transferências de valores entre contas.
+📋 Pré-requisitos – Front-End
+Para começar a utilizar o Case-Agendamento é pré-requisito ter o Node.js instalado (versão v20.11.x ou acima) e o seu gerenciador de pacote favorito na versão mais atual. Caso você ainda não tenha instalado o pacote @angular/cli, instale-o via npm ou yarn.
+Instalando com npm:
+npm i -g @angular/cli@17
+Caso prefira instalar com o yarn:
+yarn global add @angular/cli@17
+📋 Pré-requisitos – Back-End
+Para começar a utilizar o Case-Agendamento é pré-requisito ter: 
+Java 11
 
-Título do projeto
-Um parágrafo da descrição do projeto vai aqui
+Maven 3.3.3 
 
-🚀 Começando
-Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
+mvn --version
+você deverá ver a indicação da versão do Maven instalada e a versão do JDK, dentre outras. Observe que o JDK é obrigatório, assim como a definição das variáveis de ambiente JAVA_HOME e M2_HOME.
 
-Consulte Implantação para saber como implantar o projeto.
+Iniciando...
+Primeiramente, faça o clone do repositório:	
+• git clone https://github.com/emersonefb/Case-Agendamento.git
+Agora você poderá executar os vários comandos abaixo.
+🔧 Instalação –Back-End
+É preciso compilar o código e baixar as dependências do projeto:
+mvn clean package
+ 
+exemplo via Intellij
 
-📋 Pré-requisitos
-De que coisas você precisa para instalar o software e como instalá-lo?
 
-Dar exemplos
+Localize o arquivo: BackEndApplicaton para executar a aplicação no Intellij
+
+
 🔧 Instalação
-Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.
-
-Diga como essa etapa será:
-
-Dar exemplos
-E repita:
-
+Instalando com npm:
+npm install
 Até finalizar
-Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
 
-⚙️ Executando os testes
-Explicar como executar os testes automatizados para este sistema.
 
-🔩 Analise os testes de ponta a ponta
-Explique que eles verificam esses testes e porquê.
 
-Dar exemplos
-⌨️ E testes de estilo de codificação
-Explique que eles verificam esses testes e porquê.
+Após finalizar execute o comando: ng serve
 
-Dar exemplos
-📦 Implantação
-Adicione notas adicionais sobre como implantar isso em um sistema ativo
+
+Acesse o navegador:
+
+
+	
+Aceeso ao banco de dados H2:
 
 🛠️ Construído com
 Mencione as ferramentas que você usou para criar seu projeto
+• Angular - O framework web usado no front-end
+• Spring Boot - O framework usado no back-end
+• Maven - Gerente de Dependência
+✒️ Autor
+• Emerson
 
-Dropwizard - O framework web usado
-Maven - Gerente de Dependência
-ROME - Usada para gerar RSS
-🖇️ Colaborando
-Por favor, leia o COLABORACAO.md para obter detalhes sobre o nosso código de conduta e o processo para nos enviar pedidos de solicitação.
-
-📌 Versão
-Nós usamos SemVer para controle de versão. Para as versões disponíveis, observe as tags neste repositório.
-
-✒️ Autores
-Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início
-
-Um desenvolvedor - Trabalho Inicial - umdesenvolvedor
-Fulano De Tal - Documentação - fulanodetal
-Você também pode ver a lista de todos os colaboradores que participaram deste projeto.
-
-📄 Licença
-Este projeto está sob a licença (sua licença) - veja o arquivo LICENSE.md para detalhes.
-
-🎁 Expressões de gratidão
-Conte a outras pessoas sobre este projeto 📢;
-Convide alguém da equipe para uma cerveja 🍺;
-Um agradecimento publicamente 🫂;
-etc.
-⌨️ com ❤️ por Armstrong Lohãns 😊
+⌨️ por Emerson.
