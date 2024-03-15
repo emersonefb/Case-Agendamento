@@ -1,0 +1,6 @@
+/.idea/
+/logFile.log
+/back-end/logFile.log
+/back-end/target/
+/front-end/.angular/
+/front-end/.vscode/
